@@ -10,18 +10,25 @@ It is designed around one principle:
 
 Instead of relying on a giant persona prompt, the builder defines the operating system around the model: mission, responsibilities, tools, permissions, approvals, memory, persistent state, scheduling, verification, audit logs, evaluation, and runtime adapters.
 
-The result can be adapted to OpenAI-style runtimes, Anthropic-style runtimes, Gemini-style runtimes, local/open models, or future instruction-following models—as long as the surrounding runtime supplies the capabilities required by the employee.
+The result can be adapted to OpenAI-style runtimes, Anthropic-style runtimes, Gemini-style runtimes, **Grok Bot / xAI runtimes**, local/open models, or future instruction-following models—as long as the surrounding runtime supplies the capabilities required by the employee.
 
 ---
 
 ## Source and inspiration
 
-This skill was created from the **AI bot / AI employee concept discussed by Brian Roemmele** and was developed into a portable, model-neutral Agent Skill using a Feynman-style research, verification, transfer-testing, and skill-compilation process.
+This skill was built from **two primary inputs**:
 
-**Original source:** Brian Roemmele on X  
-https://x.com/brianroemmele/status/2106815617466855807
+1. **Source concept — Brian Roemmele's AI bot / AI employee idea**  
+   The operating concept, including the idea of turning AI models into persistent digital workers, was inspired by Brian Roemmele's post on X:
+   https://x.com/brianroemmele/status/2106815617466855807
 
-The repository is an independent implementation derived from that inspiration. It is not an official Brian Roemmele project, and it does not claim affiliation with or endorsement by Brian Roemmele or X.
+2. **Skill-building methodology — Feynman Skill Builder**  
+   The concept was researched, decomposed, tested, and compiled into this reusable Agent Skill using the `feynman-skill-builder` methodology. The builder follows a Feynman-style workflow:
+   **TOPIC → RESEARCH → EXPLAIN → FIND GAPS → RELEARN → TEST → COMPILE → VALIDATE → DELIVER**.
+
+In other words, **Brian Roemmele's source provides the core AI-employee concept, while the Feynman Skill Builder provides the method used to turn that concept into an evidence-grounded, portable `SKILL.md` with executable workflows, decision rules, tool-use guidance, failure modes, and validation checks.**
+
+This repository is an independent implementation. It is not an official Brian Roemmele, xAI, X, or Feynman Skill Builder project, and it does not claim affiliation with or endorsement by those parties.
 
 ---
 
@@ -349,6 +356,69 @@ Provider-specific behavior belongs in a thin adapter layer:
 - optional agent-to-agent interoperability.
 
 The employee's core job logic should remain provider-neutral.
+
+### Grok Bot and xAI support
+
+Grok is a first-class deployment target for this project. There are two useful modes, and they should not be confused.
+
+#### 1. Grok Bot native runtime
+
+Grok Bot is well matched to the AI-employee pattern because its current runtime provides persistent Bots with a cloud computer, browser, filesystem, terminal, connectors, multi-step work, approvals, skills, and scheduled/event-driven routines. The employee contract in this repository remains the durable source of truth; Grok Bot features are the execution adapter.
+
+Recommended mapping:
+
+| Universal employee concept | Grok Bot mapping |
+|---|---|
+| Employee identity / role | Named Bot |
+| Repeatable SOP | Skill |
+| Scheduled or event-driven job | Routine |
+| Browser / terminal / filesystem work | Bot cloud computer |
+| SaaS / knowledge access | Connectors |
+| Custom internal tools | Custom MCP connector |
+| Material side-effect control | Approval boundary |
+| Human escalation | Bot conversation / approval request |
+| Persistent working environment | Bot cloud computer + Bot context |
+| Durable business policy | This repo's employee contract and authority matrix |
+
+Important Grok Bot boundary: Bots associated with the same user can share the same cloud computer, including files, browser sessions, and logins. Do **not** use separate Bots as a security isolation boundary. Keep sensitive access least-privileged and approval-gated.
+
+A good Grok Bot rollout sequence is:
+
+1. create the Bot and give it one clear job;
+2. run the workflow once manually;
+3. turn the stable process into a skill;
+4. test the skill with safe inputs;
+5. convert only proven recurring work into a routine;
+6. keep sending, purchasing, deletion, publishing, production changes, and other A3 actions behind approval unless narrowly pre-authorized;
+7. re-test after connector, website, source-format, or policy changes.
+
+#### 2. xAI API runtime
+
+When using Grok through the xAI API, the model can be integrated through the Responses API or compatible chat interfaces and can use xAI built-in tools, custom function calling, and remote MCP tools. In this mode, your application should normally own:
+
+- durable task state;
+- scheduler and event triggers;
+- approval workflows;
+- credential and secret handling;
+- audit ledger and business observability;
+- retry/idempotency policy;
+- employee contract versioning.
+
+Do not assume that an API model call has the persistence or background behavior of Grok Bot. The model is still the reasoning/tool-selection component inside a larger employee runtime.
+
+For model selection, avoid coupling the employee contract to a temporary Grok model name. Feature-detect the capabilities you require. Use a stable alias when automatic upgrades are desirable; pin a dated/model-specific identifier when reproducibility matters.
+
+#### Official xAI references
+
+- Grok Bot overview: https://docs.x.ai/grok-bot/overview
+- Skills and routines: https://docs.x.ai/grok-bot/skills-routines-and-automations
+- Approvals, security, and privacy: https://docs.x.ai/grok-bot/approvals-security-and-privacy
+- xAI tools overview: https://docs.x.ai/developers/tools/overview
+- Function calling: https://docs.x.ai/developers/tools/function-calling
+- Remote MCP tools: https://docs.x.ai/developers/tools/remote-mcp
+- Models and aliases: https://docs.x.ai/developers/models
+
+The xAI platform changes quickly. Re-check the official documentation before relying on a specific model, connector, limit, approval option, or tool surface.
 
 ---
 

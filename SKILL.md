@@ -3,7 +3,7 @@ name: universal-ai-employee-builder
 description: Design, instantiate, and validate a model-agnostic AI bot employee from a job or mission. Use when the user asks to create an AI employee, autonomous worker, always-on agent, digital staff member, role-based bot, or portable agent that can operate with tools, memory, approvals, schedules, and multiple LLM providers.
 compatibility: Works with any instruction-following model. Autonomous actions require a host runtime that provides tools, state, scheduling, and permissions. Prefer Agent Skills-compatible hosts; use the prompt fallback when skills are unavailable.
 metadata:
-  version: "1.0.0"
+  version: "1.1.0"
   methodology: "evidence-first Feynman skill compilation"
   portability: "model-agnostic"
 ---
@@ -34,7 +34,7 @@ Use when the request includes concepts such as:
 - autonomous or semi-autonomous agent;
 - always-on assistant that works on recurring tasks;
 - agent that uses business tools, browsers, files, email, calendars, CRMs, databases, or code;
-- agent that should work across OpenAI, Anthropic, Gemini, local/open models, or future models;
+- agent that should work across OpenAI, Anthropic, Gemini, **Grok/xAI**, local/open models, or future models;
 - multi-model routing, supervisor/worker agents, or agent-to-agent delegation;
 - turning a human job description or SOP into an executable agent workflow.
 
@@ -234,6 +234,37 @@ Create a small adapter that maps the model-neutral contract to the target enviro
 
 If the host supports Agent Skills, keep this skill/package structure. If it does not, use `assets/portable-prompt-fallback.md` and copy the completed employee contract into the host's highest available instruction layer.
 
+#### Grok Bot / xAI adapter
+
+Treat **Grok Bot** and the **xAI API** as two related but distinct deployment targets.
+
+For **Grok Bot**:
+- map the employee role to a named Bot and keep the durable employee contract as the source of truth;
+- translate repeatable procedures into Grok Bot **skills** and recurring/event-driven work into **routines**;
+- use Grok Bot's persistent cloud computer, browser, filesystem, terminal, connectors, and computer-use capability only within the employee's authority matrix;
+- prefer available connectors for SaaS/data access and use a custom MCP connector when the required system is not available natively;
+- preserve approval gates for sending, purchasing, deleting, publishing, production changes, local-computer execution, and other A3 actions;
+- account for Grok Bot's shared-computer boundary: Bots under the same user may share files, browser sessions, and logins, so separate Bots are **not** a security boundary;
+- test a skill on a safe one-time task before converting it into an unattended routine;
+- define stale-data, no-data, retry, partial-completion, and reporting behavior for every routine.
+
+For the **xAI API**:
+- use the Responses API or compatible chat interface as the reasoning surface;
+- map generic capabilities to xAI built-in tools, custom function calling, or remote MCP tools;
+- keep external state, scheduler/event handling, approvals, secrets, and the audit ledger in the host application unless the chosen xAI runtime explicitly supplies them;
+- do not infer that API tool availability equals Grok Bot persistence or background execution;
+- feature-detect tool and model support instead of hard-coding a transient model slug; use stable aliases only when automatic model upgrades are acceptable and dated/pinned identifiers when reproducibility is required;
+- when remote MCP is used, enforce approvals in the application layer if the selected interface does not expose the approval control needed by the employee contract.
+
+Official xAI references for implementation and freshness checks:
+- `https://docs.x.ai/grok-bot/overview`
+- `https://docs.x.ai/grok-bot/skills-routines-and-automations`
+- `https://docs.x.ai/grok-bot/approvals-security-and-privacy`
+- `https://docs.x.ai/developers/tools/overview`
+- `https://docs.x.ai/developers/tools/function-calling`
+- `https://docs.x.ai/developers/tools/remote-mcp`
+- `https://docs.x.ai/developers/models`
+
 ### Step 10: Add audit and work accounting
 
 For every completed or attempted task, record at minimum:
@@ -302,6 +333,9 @@ Prefer staged autonomy over granting broad write access on day one.
 - If a tool reports success but the expected state cannot be observed, do not mark the task complete.
 - If the model is swapped, reconstruct from the employee contract, task state, artifacts, and ledger—not from assumed hidden memory.
 - If the host supports MCP, prefer it for standardized tool exposure when appropriate; do not require MCP when native tools are sufficient.
+- If deploying to Grok Bot, map procedures to skills and recurring/event work to routines; do not treat a Bot's persisted context or shared cloud computer as a substitute for the employee contract, explicit authority policy, or audit state.
+- If deploying through the xAI API, treat Grok as the reasoning/tool-calling runtime and keep persistence, scheduling, approval policy, and durable task state in the surrounding application unless verified otherwise.
+- If Grok Bot or an xAI tool surface has changed since this skill was authored, verify the current xAI documentation before relying on that capability.
 - If independent agents must interoperate across vendors/runtimes, consider A2A; do not use A2A merely to split a simple task into unnecessary agents.
 
 ## Evidence and tool-use rules
