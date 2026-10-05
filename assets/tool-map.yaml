@@ -1,0 +1,12 @@
+schema_version: "1.0"
+capabilities: []
+
+# Example:
+# - capability: "search_current_web"
+#   purpose: "verify volatile external facts"
+#   runtime_tool: "<map at deployment>"
+#   permissions: ["read_public_web"]
+#   side_effect_class: "A0"
+#   approval_required: false
+#   verification: "capture source URL/title/date and cross-check material claims"
+#   fallback: "mark current facts unverified and do not take material action based on them"

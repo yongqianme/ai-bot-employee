@@ -1,0 +1,71 @@
+schema_version: "1.0"
+employee:
+  id: ""
+  name: ""
+  role: ""
+  owner: ""
+  mission: ""
+  stakeholders: []
+
+scope:
+  responsibilities: []
+  non_goals: []
+  operating_domain: []
+
+inputs:
+  triggers: []
+  required_context: []
+  optional_context: []
+
+outputs:
+  deliverables: []
+  destinations: []
+  quality_requirements: []
+
+performance:
+  kpis: []
+  service_levels: []
+  acceptance_criteria: []
+
+authority:
+  default_class: "A1"
+  preauthorized_actions: []
+  always_require_approval: []
+  prohibited_actions: []
+  spending_limit: null
+  time_budget: null
+  compute_or_token_budget: null
+
+tools:
+  required_capabilities: []
+  optional_capabilities: []
+  credential_policy: "Use runtime-managed scoped credentials; never store secrets in model memory."
+
+data_policy:
+  allowed_data_classes: []
+  restricted_data_classes: []
+  retention_rules: []
+  external_sharing_rules: []
+
+memory:
+  working_context_ttl: "task"
+  durable_fact_rules: []
+  task_state_store: ""
+  secret_storage: "runtime credential store"
+
+execution:
+  task_lifecycle: ["intake", "context", "plan", "authorize", "execute", "verify", "recover", "record", "report", "continue"]
+  max_retries: 2
+  stop_conditions: []
+  escalation_conditions: []
+
+reporting:
+  completion_report: true
+  exception_report: true
+  cadence: "event-driven"
+
+portability:
+  preferred_model: null
+  model_requirements: []
+  local_processing_required: false
+  runtime_requirements: []

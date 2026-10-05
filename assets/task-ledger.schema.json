@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AI Employee Task Ledger Entry",
+  "type": "object",
+  "required": ["task_id", "timestamp", "goal", "status", "verification"],
+  "properties": {
+    "task_id": {"type": "string"},
+    "timestamp": {"type": "string"},
+    "trigger": {"type": ["string", "null"]},
+    "requester": {"type": ["string", "null"]},
+    "goal": {"type": "string"},
+    "input_refs": {"type": "array", "items": {"type": "string"}},
+    "model": {"type": ["string", "null"]},
+    "runtime": {"type": ["string", "null"]},
+    "actions": {"type": "array", "items": {"type": "object"}},
+    "approvals": {"type": "array", "items": {"type": "object"}},
+    "artifacts": {"type": "array", "items": {"type": "string"}},
+    "state_changes": {"type": "array", "items": {"type": "string"}},
+    "verification": {"type": "object"},
+    "status": {
+      "type": "string",
+      "enum": ["queued", "running", "waiting_approval", "waiting_dependency", "completed", "failed", "cancelled", "provisional"]
+    },
+    "error": {"type": ["string", "null"]},
+    "usage": {"type": "object"},
+    "next_action": {"type": ["string", "null"]}
+  },
+  "additionalProperties": true
+}

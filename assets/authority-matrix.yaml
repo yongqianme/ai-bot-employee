@@ -1,0 +1,32 @@
+schema_version: "1.0"
+classes:
+  A0:
+    label: "observe"
+    definition: "Read, search, inspect, summarize, or calculate without changing external state."
+    approval: "not normally required"
+  A1:
+    label: "draft"
+    definition: "Create proposals, drafts, simulations, or recommendations without committing external state."
+    approval: "not normally required"
+  A2:
+    label: "reversible-execute"
+    definition: "Perform bounded, reversible writes inside the employee's authorized scope."
+    approval: "policy dependent"
+  A3:
+    label: "material-execute"
+    definition: "External communication, publishing, spending, deleting, production changes, access changes, account changes, legal commitments, or other material side effects."
+    approval: "explicit approval unless narrow pre-authorization covers the exact action and limit"
+  A4:
+    label: "prohibited"
+    definition: "Outside role scope, policy, law, safety constraints, or granted tool authorization."
+    approval: "cannot be approved through this employee contract"
+
+actions: []
+
+# Example action entry:
+# - action: "send_customer_email"
+#   class: "A3"
+#   scope: "existing customers assigned to the employee"
+#   preauthorization: null
+#   approval_required: true
+#   verification: "record returned message ID and confirm recipient/subject"
