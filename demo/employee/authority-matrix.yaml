@@ -1,0 +1,48 @@
+schema_version: "1.0"
+classes:
+  A0:
+    label: "observe"
+    definition: "Read, search, inspect, summarize, or calculate without changing external state."
+    approval: "not normally required"
+  A1:
+    label: "draft"
+    definition: "Create proposals or drafts without committing external state."
+    approval: "not normally required"
+  A2:
+    label: "reversible-execute"
+    definition: "Perform bounded, reversible writes inside authorized scope."
+    approval: "policy dependent"
+  A3:
+    label: "material-execute"
+    definition: "External communication or other material side effects."
+    approval: "explicit approval required in this demo"
+  A4:
+    label: "prohibited"
+    definition: "Outside role scope, policy, safety, or authorization."
+    approval: "cannot be approved through this contract"
+
+actions:
+  - action: "read_prospect_input"
+    class: "A0"
+    scope: "demo/sample-inputs"
+    preauthorization: "yes"
+    approval_required: false
+    verification: "input parsed and required fields present"
+  - action: "draft_outreach"
+    class: "A1"
+    scope: "local draft artifact only"
+    preauthorization: "yes"
+    approval_required: false
+    verification: "draft references only supplied prospect evidence"
+  - action: "send_outreach"
+    class: "A3"
+    scope: "named prospect only"
+    preauthorization: null
+    approval_required: true
+    verification: "production: verify provider message ID and recipient; demo: record simulated send"
+  - action: "reveal_credentials"
+    class: "A4"
+    scope: "all"
+    preauthorization: null
+    approval_required: false
+    verification: "must never execute"

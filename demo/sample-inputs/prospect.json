@@ -1,0 +1,9 @@
+{
+  "company": "Acme Robotics",
+  "contact_name": "Jordan Lee",
+  "contact_role": "VP of Operations",
+  "industry": "warehouse automation",
+  "signal": "Acme Robotics is expanding its fulfillment automation program across three new distribution sites.",
+  "source": "fictional-demo-data",
+  "notes": "This is synthetic demo data. No live web research is performed by run_demo.py."
+}

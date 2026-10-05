@@ -1,0 +1,29 @@
+schema_version: "1.0"
+capabilities:
+  - capability: "read_prospect_data"
+    purpose: "load the approved prospect evidence"
+    runtime_tool: "demo local JSON reader"
+    permissions:
+      - "read demo/sample-inputs"
+    side_effect_class: "A0"
+    approval_required: false
+    verification: "required keys are present"
+    fallback: "stop and report missing evidence"
+  - capability: "draft_text"
+    purpose: "produce an outreach draft"
+    runtime_tool: "demo deterministic template; production maps to selected model"
+    permissions:
+      - "write demo/output"
+    side_effect_class: "A1"
+    approval_required: false
+    verification: "draft contains contact/company and supplied signal"
+    fallback: "write a structured handoff containing the evidence only"
+  - capability: "send_email"
+    purpose: "send approved outreach"
+    runtime_tool: "SIMULATED in this demo; production maps to email connector/function/MCP tool"
+    permissions:
+      - "external_send_when_approved"
+    side_effect_class: "A3"
+    approval_required: true
+    verification: "demo records simulated-send ID; production verifies provider message ID"
+    fallback: "save draft and wait for human send"
